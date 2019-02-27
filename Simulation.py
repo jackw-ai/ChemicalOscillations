@@ -82,7 +82,7 @@ class BZSim():
         # average across the nine values
         return c_a / 9, c_b / 9, c_c / 9
 
-    def animate(self, n_frames = 10, cmap = 'jet'):
+    def animate(self, n_frames = 10, cmap = 'jet', verbose = False):
         ''' animates grid using plt for n_frames using cmap as colormap'''
         
         fig = plt.figure()
@@ -92,10 +92,17 @@ class BZSim():
         ims.append([im])
         
         # add the next frames
-        for _ in range(n_frames):
+        for i in range(n_frames):
+
+            if verbose:
+                print("Frame %d" %(i + 1))
+                
             self.step()
             im = plt.imshow(self.a[1 - self.p], cmap = cmap, animated = True)
             ims.append([im])
+
+        if verbose:
+            print("Frames built, animating...")
 
         anim = animation.ArtistAnimation(fig, ims, interval=100, blit=True, repeat_delay=2000)
 
@@ -111,10 +118,13 @@ class BZSim():
 sim = BZSim(WIDTH, HEIGHT)
 
 sim.setup()
+
+'''
 sim.display(initial = True)
 sim.step()
 sim.display()
 sim.step()
 sim.display()
+'''
 
-#sim.animate()
+sim.animate(verbose = True)
