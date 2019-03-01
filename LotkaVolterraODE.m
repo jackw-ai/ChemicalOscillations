@@ -3,11 +3,11 @@ function part1
 clear x;
 
 % time span in weeks
-tspan = [0 1000];
+tspan = [0 100];
 
 % starting values
-G = 1000;
-R = 100;
+G = 20;
+R = 20;
 
 %F = @(t,x) [(-1 * (2 * log(2)) / N) * x(2) * x(1); ((2 * log(2)) / N) * x(2) * x(1) - (log(2)) * x(2); (log(2)) * x(2)];
 
