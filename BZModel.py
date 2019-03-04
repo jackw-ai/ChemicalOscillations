@@ -26,9 +26,9 @@ class BZSim():
         # initialize grid representation
         ## since we need the previous instance, we store two matrices
         ## and switch between then at each timestep
-        self.a = np.zeros((2, WIDTH, HEIGHT))
-        self.b = np.zeros((2, WIDTH, HEIGHT))
-        self.c = np.zeros((2, WIDTH, HEIGHT))
+        self.a = np.zeros((2, self.w, self.h))
+        self.b = np.zeros((2, self.w, self.h))
+        self.c = np.zeros((2, self.w, self.h))
 
         # bit index representing which matrix is curr timestep
         self.p = 0
@@ -82,7 +82,7 @@ class BZSim():
         # average across the nine values
         return c_a / 9, c_b / 9, c_c / 9
 
-    def animate(self, n_frames = 10, cmap = 'jet', verbose = False):
+    def animate(self, n_frames = 10, cmap = 'jet', verbose = False, save = False):
         ''' animates grid using plt for n_frames using cmap as colormap'''
         
         fig = plt.figure()
@@ -106,6 +106,10 @@ class BZSim():
 
         anim = animation.ArtistAnimation(fig, ims, interval=100, blit=True, repeat_delay=2000)
 
+        if save:
+            anim.save(filename='bz.mp4', fps=15)
+            print('video saved')
+        
         plt.show()
 
     def display(self, cmap = 'jet', initial = False):
@@ -128,3 +132,5 @@ sim.display()
 '''
 
 sim.animate(verbose = True)
+
+sim.animate(n_frames = 100, save = True)

@@ -1,3 +1,12 @@
+'''
+Simulated equations:
+    a_{t+1} = a_t + a_t(alpha b_t - gamma c_t)
+    
+    b_{t+1} = b_t + b_t(beta c_t - alpha a_t)
+    
+    c_{t+1} = c_t + c_t(gamma a_t - beta  b_t)
+'''
+
 import numpy as np
 from scipy.signal import convolve2d
 import matplotlib.pyplot as plt
@@ -62,12 +71,12 @@ class BZSimConv():
         np.clip(self.data[q], 0, 1, self.data[q])
     
     
-    def simulate(self, save = False):
+    def simulate(self, save = False, colormap = plt.cm.winter):
         ''' generates video of simulation '''
         
         # Set up the image
         fig, ax = plt.subplots()
-        im = ax.imshow(self.data[0,0], cmap = plt.cm.winter)
+        im = ax.imshow(self.data[0,0], cmap = colormap)
         ax.axis('off')
 
         def animate(i):
@@ -79,7 +88,7 @@ class BZSimConv():
         anim = animation.FuncAnimation(fig, animate, frames = 200, interval = 100, blit=False)
 
         if save:
-            anim.save(filename = 'bz.mp4', fps = 30)
+            anim.save(filename = 'bz.mp4', fps = 15)
             
         return HTML(anim.to_html5_video())
 
@@ -87,5 +96,14 @@ class BZSimConv():
 conv = BZSimConv(WIDTH, HEIGHT)
 conv.simulate()
 
+conv.reset(1, 1, 1)
+conv.simulate(save = True, colormap = 'jet')
+
+conv.reset(1.2, 1, 1)
+conv.simulate(save = True)
+
 conv.reset(1, 1, 1.4)
 conv.simulate()
+
+conv.reset(1, 1.3, 1)
+conv.simulate(save = True)

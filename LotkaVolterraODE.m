@@ -1,5 +1,5 @@
 
-function part1
+function LotkaVolterraODE
 clear x;
 
 % time span in weeks
